@@ -54,6 +54,18 @@ export default class Game extends Component {
         });
     };
 
+    handleReset = (  ) => {
+        this.setState({
+            history: [
+                {
+                    squares: Array(9).fill(null),
+                }
+            ],
+            stepNumber: 0,
+            xlsNext: true,
+        })
+    };
+
     jumpTo = ( step ) => {
         this.setState({
             stepNumber: step,
@@ -75,11 +87,18 @@ export default class Game extends Component {
                 </li>
             );
         });
-        let status;
+        let status,
+            _winner;
         if(winner) {
-            status = "Winner"+ winner;
+            _winner = `Winner ${ winner }`;
+            const showWinner = new Promise((resolve, reject) => {
+                if(_winner === `Winner ${ winner }` ) {
+                    resolve(_winner)
+                }
+            });
+            showWinner.then((status) => alert(status));
         } else {
-            status = "Next player " + (this.state.xlsNext ? "X" : "O");
+            status = `Next player ${(this.state.xlsNext ? "X" : "O")}`;
         }
 
         return (
@@ -91,6 +110,7 @@ export default class Game extends Component {
                     />
                 </div>
                 <div className="game-info">
+                    <button onClick={() => this.handleReset()}>Reset game</button>
                     <div>{status}</div>
                     <ol>{moves}</ol>
                 </div>

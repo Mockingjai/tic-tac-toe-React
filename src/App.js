@@ -4,7 +4,7 @@ import Game from './Game/Game';
 import './App.css';
 import { Title } from "./Title/Title";
 
-function App() {
+function App () {
   return (
     <div className="App">
       <Title />
