@@ -129,7 +129,8 @@ export default class Game extends Component {
             _winner = `Winner ${ winner }`;
             const showWinner = new Promise((resolve, reject) => {
                 if(_winner === `Winner ${ winner }` ) {
-                    resolve(_winner)
+                    resolve(_winner);
+                    this.handleReset();
                 }
             });
             showWinner.then((_winner) => alert(_winner));
