@@ -1,6 +1,39 @@
 import React, { Component } from 'react';
 import Board from "../Board/Board";
 
+const _styles = {
+    button_reset: {
+        position: 'absolute',
+        top: '75px',
+        left: '410px',
+        border: 'none',
+        cursor: 'pointer',
+        fontSize: '16px',
+        height: '25px',
+        color: 'white',
+        backgroundColor: 'skyblue',
+        boxShadow: '2px 2px 2px grey',
+        borderRadius: '4px 3px 4px 3px',
+    },
+    turn_status: {
+        fontSize: '16px',
+        padding: '10px 0 0 0',
+        fontFamily: 'monospace',
+        color: 'brown',
+    },
+    history_button: {
+        fontSize: '16px',
+        height: '25px',
+        color: 'white',
+        backgroundColor: 'green',
+        border: 'none',
+        cursor: 'pointer',
+        boxShadow: '4px 2px 4px black',
+        borderRadius: '2px 3px 2px 3px',
+        margin: '0 0 5px 0',
+    }
+};
+
 function calculateWinner(squares) {
     const lines = [
         [0, 1, 2],
@@ -83,7 +116,10 @@ export default class Game extends Component {
                 'Go to game start';
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <button
+                        style={ {..._styles.history_button } }
+                        onClick={() => this.jumpTo(move)}>{desc}
+                    </button>
                 </li>
             );
         });
@@ -96,9 +132,9 @@ export default class Game extends Component {
                     resolve(_winner)
                 }
             });
-            showWinner.then((status) => alert(status));
+            showWinner.then((_winner) => alert(_winner));
         } else {
-            status = `Next player ${(this.state.xlsNext ? "X" : "O")}`;
+            status = `Next player: ${(this.state.xlsNext ? "X" : "O")}`;
         }
 
         return (
@@ -110,8 +146,11 @@ export default class Game extends Component {
                     />
                 </div>
                 <div className="game-info">
-                    <button onClick={() => this.handleReset()}>Reset game</button>
-                    <div>{status}</div>
+                    <button
+                        style={ { ..._styles.button_reset } }
+                        onClick={() => this.handleReset()}>Reset game
+                    </button>
+                    <div style={ { ..._styles.turn_status } }>{status}</div>
                     <ol>{moves}</ol>
                 </div>
             </div>
